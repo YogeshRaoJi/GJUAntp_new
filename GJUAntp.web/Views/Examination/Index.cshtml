@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/js/jquery-3.6.0.slim.min.js"></script>
+<script src="~/js/timer.js"></script>
+<br />
+<div class="container-fluid timer">
+    
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-sm-6"">
+            <div class="card mb-4 ">
+                <div class="card-header bg-success text-light"><strong><span class="badge badge-primary">1</span> What is computer?</strong></div>
+                <div class="card-body">
+
+
+                    <div class="card mb-1">
+                        <div class="card-body">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    A &nbsp;<input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <span class="m-2">All The above</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-1">
+                        <div class="card-body">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    B &nbsp; <input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <span class="m-2">All The above</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-1">
+                        <div class="card-body">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    C &nbsp;<input type="checkbox" aria-label="Checkbox for following text input">
+                                </div>
+                                <span class="m-2">All The above</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-1">
+                        <div class="card-body">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    D &nbsp; <input type="checkbox" aria-label="Checkbox for following text input"> 
+                                </div>
+                                <span class="m-2">All The above</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="card-footer text-light">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="btn-group m-3 float-right">
+                                <button type="button" class="btn btn-outline-primary" onclick="previousQuestion()">
+                                    Previous
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" onclick="nextQuestion()">
+                                    Next
+                                </button>
+                                <button type="button" class="btn btn-outline-success" onclick="submitExam()">
+                                Submit
+                                </button>
+                            </div>
+                        </div>
+                       </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="row border">
+                <div class="col-12 p-1">
+                    <h5>Answered will be showing in green color and non answered in blue color </h5>
+                    <hr />
+                </div>
+                <div class="col-12 p-1 text-center">
+                        @for(int i=1; i<=100; i++){
+                        <button class="btn btn-primary pointer m-1 col-2" style="width:53px;" onclick="randomQuestion('@i')">@i</button>
+                    }
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+</div>
+
+
+<script>
+    localStorage.clear();
+    // 120 minutes
+    set_timer($('.timer'), [
+        0, // date
+        0, // hour
+        1, // minute
+        0 // second
+    ], function (block) {
+            
+    });
+    window.BeforeUnloadEvent = function () {
+        alert("done");
+    }
+    var next = 2;
+    var previous = 0;
+
+    function nextQuestion() {
+        loadQuestion(next);
+    }
+
+    function previousQuestion() {
+        loadQuestion(previous);
+    }
+    function randomQuestion(qNumber) {
+        loadQuestion(qNumber);
+        if (Number(qNumber) <  0) {
+
+        }
+    }
+    function loadQuestion(qNumber) {
+        if (Number(qNumber) >0)
+        $.ajax({
+            type: 'GET',
+            url: '/demo/demo1',
+            success: function (result) {
+                $('#result1').html(result);
+            }
+        });
+    }
+    
+    
+</script>
